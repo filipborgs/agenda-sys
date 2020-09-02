@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // echo phpinfo();
     return view('index');
 });
+
+Route::any('/login', array('as' => 'ajax.login', 'uses'  => 'UsuarioController@login'));
+// Route::get('/', array('uses'  => 'UsuarioController@login'));

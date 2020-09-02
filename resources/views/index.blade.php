@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Agenda-Sys | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -14,6 +14,44 @@
 </head>
 
 <body class="hold-transition login-page">
+    <script>
+        function auth() {
+            let login = document.getElementById('login').value;
+            let senha = document.getElementById('senha').value;
+
+            if (login === '' || senha === '') {
+                alert('Senha ou login invalido');
+            } else {
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1:8000/login",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: JSON.stringify({
+                        name: "teste",
+                        id: 1
+                    }),
+                    contentType: "application/json",
+                    error: function(error, er, thrownError) {
+                        alert('erro');
+                        console.log(error);
+                        console.log(er);
+                        console.log(thrownError);
+                    },
+
+                    success: function(json) {
+                        alert('ss');
+                        console.log(json);
+                    }
+                });
+            }
+        }
+
+    </script>
+
     <div class="login-box">
 
         <div class="login-logo">
@@ -24,9 +62,9 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Insira os dados de login</p>
 
-                <form action="#" method="post">
+                <form id="formteste" onSubmit="auth();">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Login">
+                        <input id="login" type="text" class="form-control" placeholder="Login">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -34,7 +72,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Senha">
+                        <input id="senha" type="password" class="form-control" placeholder="Senha">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -43,7 +81,7 @@
                     </div>
                     <div class="row">
 
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
                     </div>
                 </form>
 
@@ -55,4 +93,5 @@
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../dist/js/adminlte.min.js"></script>
 </body>
+
 </html>
