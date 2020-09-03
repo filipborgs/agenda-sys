@@ -17,7 +17,7 @@ class CreateClientesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('endereco');
             $table->string('nome', 255);
-            $table->string('cpfCnpj', 14);
+            $table->string('cpfCnpj', 14)->unique();
             $table->string('email', 255);
             $table->char('tipoPessoa', 1);
             $table->timestamps();
