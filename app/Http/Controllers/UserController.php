@@ -28,9 +28,9 @@ class UserController extends Controller
 
         Auth::attempt(["login" => $json->login, "password" => $json->password]);
         if (Auth::check()) {
-            return "logado";
+            return "200";
         } else {
-            return "falha";
+            return "401";
         }
     }
 

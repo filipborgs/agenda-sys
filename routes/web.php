@@ -19,10 +19,13 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/main', function () {
-    // echo phpinfo();
     return view('main');
-})->middleware('auth');
+})->middleware('auth')->name('main.agenda');
+
+Route::get('/usuario-cadastro', function () {
+    return view('inserir-usuario');
+})->middleware('auth')->name('inserir.usuario');
 
 Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserController@login'));
 
-Route::post('/usuario/cadastro', array('uses'  => 'UserController@store'));
+Route::post('/usuario/cadastrar', array('uses'  => 'UserController@store'))->name('ajax.cadastro.usuario');

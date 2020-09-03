@@ -29,8 +29,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: JSON.stringify({
-                        login: "admin",
-                        password: 'admin'
+                        login: loginInput,
+                        password: senhaInput
                     }),
                     contentType: "application/json",
                     error: function(error, er, thrownError) {
@@ -44,8 +44,6 @@
                         window.location.href = "http://127.0.0.1:8000/main";
                     }
                 });
-
-
             }
         }
 

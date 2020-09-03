@@ -11,9 +11,41 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script>
+        function cadastrarUsuario() {
+            let loginInput = document.getElementById('loginInput').value;
+            let senhaInput = document.getElementById('senhaInput').value;
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('ajax.cadastro.usuario') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify({
+                    login: loginInput,
+                    password: senhaInput
+                }),
+                contentType: "application/json",
+                error: function(error, er, thrownError) {
+                    alert('Senha ou login invalido');
+                    console.log(error);
+                    console.log(er);
+                    console.log(thrownError);
+                },
+
+                success: function(json) {
+                    alert("Cadastro realizado com sucesso");
+                    window.location.href = "{{ route('main.agenda') }}";
+                }
+            });
+        }
+
+    </script>
+
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div id="alertModalSys"> </div>
 
     <div class="wrapper">
@@ -25,7 +57,7 @@
                 </li>
                 <li class="nav-item d-sm-inline-block">
                     <a href="#" class="nav-link">
-                        <h5>Agenda</h5>
+                        <h5>Usuário</h5>
                     </a>
                 </li>
             </ul>
@@ -99,13 +131,36 @@
             <section class="content">
                 <div id="mainDiv" class="container-fluid">
                     <div class="container-fluid">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Quick Example</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="loginInput">Login</label>
+                                    <input type="text" class="form-control" id="loginInput"
+                                        placeholder="Insira o login">
+                                </div>
+                                <div class="form-group">
+                                    <label for="senhaInput">Senha</label>
+                                    <input type="password" class="form-control" id="senhaInput"
+                                        placeholder="Insira a senha">
+                                </div>
 
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" id="btnSubmit" onclick="cadastrarUsuario();"
+                                    class="btn btn-primary">Cadastrar Usuário</button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
-                <div id="cardsDiv" class="row">
 
-                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -138,11 +193,12 @@
 
     </script>
     <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
 
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
 </body>
 
