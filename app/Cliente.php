@@ -7,4 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     //
+    protected $fillable = [
+        'nome', 'cpfCnpj', 'email', 'tipoPessoa'
+    ];
+
+    public function endereco()
+    {
+        return $this->hasOne(Endereco::class, 'endereco', 'id');
+    }
+
+    public function contatos()
+    {
+        return $this->hasMany(Contato::class, 'cliente', 'id');
+    }
 }

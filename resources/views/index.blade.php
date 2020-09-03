@@ -31,8 +31,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: JSON.stringify({
-                        name: "teste",
-                        id: 1
+                        nome: "teste12",
+                        uf: 'RJ'
                     }),
                     contentType: "application/json",
                     error: function(error, er, thrownError) {
