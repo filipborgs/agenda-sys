@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     // echo phpinfo();
     return view('index');
-});
+})->name('index');
 
-Route::any('/login', array('as' => 'ajax.login', 'uses'  => 'UsuarioController@login'));
-// Route::get('/', array('uses'  => 'UsuarioController@login'));
+Route::get('/main', function () {
+    // echo phpinfo();
+    return view('main');
+})->middleware('auth');
+
+Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserController@login'));
+
+Route::post('/usuario/cadastro', array('uses'  => 'UserController@store'));
