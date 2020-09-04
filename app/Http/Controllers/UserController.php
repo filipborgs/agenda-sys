@@ -34,6 +34,12 @@ class UserController extends Controller
         }
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return   redirect()->route('index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

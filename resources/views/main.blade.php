@@ -29,6 +29,15 @@
                     </a>
                 </li>
             </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class=" nav-link">
+
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </a>
+                </li>
+            </ul>
         </nav>
 
 
@@ -55,19 +64,17 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-
                         <li class="nav-header">Menu</li>
                         <li class="nav-item">
-                            <a href="{{ route('main.agenda') }}" class="nav-link">
+                            <a href="{{ route('main.agenda') }}" class="nav-link active">
                                 <i class="fas fa-address-card"></i>
 
                                 <p class="text">Visualizar Agenda</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('inserir.registro') }}" class="nav-link">
                                 <i class="fas fa-user-plus"></i>
-
                                 <p>Inserir Novo registro</p>
                             </a>
                         </li>
@@ -141,6 +148,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
