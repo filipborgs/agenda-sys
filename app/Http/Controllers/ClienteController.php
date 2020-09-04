@@ -8,6 +8,7 @@ use App\Cliente;
 use App\Contato;
 use App\Endereco;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -18,7 +19,22 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $pesquisa = '999';
+        // $clientes = Cliente::simplePaginate(15);
+        // return $clientes;
+        // $cliente = Cliente::where('id', 1)->first();
+
+        // $end = $cliente->endereco()->first();
+        // var_dump($end);
+
+        // $users = DB::table('clientes')
+        //     ->join('contatos', 'clientes.id', '=', 'contatos.cliente')
+        //     ->groupBy('clientes.id')->simplePaginate(15);
+
+        $users = DB::table('clientes')
+            ->join('contatos', 'clientes.id', '=', 'contatos.cliente')->select('clientes.*', 'contatos.telefone', 'contatos.ddd')->whereRaw('nome like ? or telefone like ?', ["%{$pesquisa}%", "%{$pesquisa}%"])->groupBy('cliente')
+            ->paginate(2);
+        return $users;
     }
 
     /**
@@ -44,21 +60,21 @@ class ClienteController extends Controller
         $bairro->cidade = $cidade->id;
         $bairro->save();
 
-        $endereco = new Endereco();
-        $endereco->bairro = $bairro->id;
-        $endereco->cep = $json->endereco->cep;
-        $endereco->logadouro = $json->endereco->logadouro;
-        $endereco->numero = $json->endereco->numero;
-        $endereco->complemento = $json->endereco->complemento;
-        $endereco->save();
-
         $cliente = new Cliente();
-        $cliente->endereco = $endereco->id;
         $cliente->nome = $json->nome;
         $cliente->cpfCnpj = $json->cpfCnpj;
         $cliente->email = $json->email;
         $cliente->tipoPessoa = $json->tipoPessoa;
         $cliente->save();
+
+        $endereco = new Endereco();
+        $endereco->bairro = $bairro->id;
+        $endereco->cliente = $cliente->id;
+        $endereco->cep = $json->endereco->cep;
+        $endereco->logadouro = $json->endereco->logadouro;
+        $endereco->numero = $json->endereco->numero;
+        $endereco->complemento = $json->endereco->complemento;
+        $endereco->save();
 
         foreach ($json->contatos as &$contatoForm) {
             $contato = new Contato();

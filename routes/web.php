@@ -25,7 +25,7 @@ Route::get('/main', function () {
 
 Route::get('/usuario-cadastro', function () {
     return view('inserir-usuario');
-})->middleware('auth')->name('inserir.usuario');
+})->name('inserir.usuario');
 
 Route::get('/inserir-registro', function () {
     return view('inserir-registro');
@@ -33,8 +33,12 @@ Route::get('/inserir-registro', function () {
 
 
 //Services
-Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserController@login'));
-
 Route::get('/usuario/logout', array('uses'  => 'UserController@logout'))->name('logout');
 
-Route::post('/usuario/cadastrar', array('uses'  => 'ClienteController@store'))->name('ajax.cadastro.usuario');
+Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserController@login'));
+
+Route::post('/usuario/cadastrar', array('uses'  => 'UserController@store'))->name('ajax.cadastro.usuario');
+
+Route::get('/cliente/pesquisa', array('uses'  => 'ClienteController@index'))->name('ajax.clientes');
+
+Route::post('/cliente/cadastrar', array('uses'  => 'ClienteController@store'))->name('ajax.cadastro.cliente');

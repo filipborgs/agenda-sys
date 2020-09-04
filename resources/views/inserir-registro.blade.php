@@ -90,11 +90,18 @@
                 this.contatos = [];
 
                 let contador = window.sessionStorage.getItem('contadorTel');
-                for (let index = 1; index <= contador; index++) {
+                if (contador === null) {
                     let contato = new Contato();
-                    contato.getContatoForm(index);
+                    contato.getContatoForm(1);
                     this.contatos.push(contato);
+                } else {
+                    for (let index = 1; index <= contador; index++) {
+                        let contato = new Contato();
+                        contato.getContatoForm(index);
+                        this.contatos.push(contato);
+                    }
                 }
+
             }
 
 
@@ -106,7 +113,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('ajax.cadastro.usuario') }}",
+                url: "{{ route('ajax.cadastro.cliente') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
