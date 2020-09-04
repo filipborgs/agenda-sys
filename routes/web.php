@@ -39,6 +39,6 @@ Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserContro
 
 Route::post('/usuario/cadastrar', array('uses'  => 'UserController@store'))->name('ajax.cadastro.usuario');
 
-Route::get('/cliente/pesquisa', array('uses'  => 'ClienteController@index'))->name('ajax.clientes');
+Route::get('/cliente/pesquisa/{pesquisa?}', array('uses'  => 'ClienteController@index'))->name('ajax.pesquisa.cliente');
 
 Route::post('/cliente/cadastrar', array('uses'  => 'ClienteController@store'))->name('ajax.cadastro.cliente');

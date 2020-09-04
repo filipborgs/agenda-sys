@@ -11,6 +11,105 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <script>
+        window.onload = function() {
+            listar("{{ route('ajax.pesquisa.cliente') }}");
+        }
+
+        function pesquisar() {
+            let pesquisa = document.getElementById('pesquisaInput').value;
+
+            if (pesquisa === null) {
+                pesquisa = "{{ route('ajax.pesquisa.cliente') }}";
+            } else {
+                pesquisa = "{{ route('ajax.pesquisa.cliente') }}" + "/" + pesquisa;
+            }
+
+            listar(pesquisa);
+        }
+
+        function listar(url) {
+            document.getElementById('divLoading').style.display = "block";
+            $("#tbodyAgenda").empty();
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                // url: "{{ route('ajax.pesquisa.cliente') }}" + "/" + pesquisa,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                error: function(error, er, thrownError) {
+                    alert('Erro');
+                    document.getElementById('divLoading').style.display = "none";
+
+                    console.log(error);
+                    console.log(er);
+                    console.log(thrownError);
+                },
+
+                success: function(json) {
+                    console.log(json);
+                    let tbody = document.getElementById('tbodyAgenda');
+
+                    for (let cliente of json.data) {
+                        let tr = document.createElement("tr");
+
+                        let td = document.createElement("td");
+                        td.innerText = cliente.id;
+                        tr.appendChild(td);
+
+                        td = document.createElement("td");
+                        td.innerText = cliente.nome;
+                        tr.appendChild(td);
+
+                        td = document.createElement("td");
+                        td.innerText = cliente.tipoPessoa;
+                        tr.appendChild(td);
+
+                        td = document.createElement("td");
+                        td.innerText = cliente.cpfCnpj;
+                        tr.appendChild(td);
+
+                        td = document.createElement("td");
+                        td.innerText = cliente.email;
+                        tr.appendChild(td);
+
+                        td = document.createElement("td");
+                        td.innerText = cliente.telefone;
+                        tr.appendChild(td);
+
+                        tbody.appendChild(tr);
+                    }
+
+                    document.getElementById('divLoading').style.display = "none";
+
+                    let btnAnterior = document.getElementById('btnAnterior');
+                    if (json.current_page != 1) {
+                        btnAnterior.setAttribute('onclick', 'listar(\'' + json.prev_page_url + '\');');
+                        btnAnterior.style.display = "block"
+                    } else {
+                        btnAnterior.setAttribute('onclick', '');
+                        btnAnterior.style.display = "none"
+                    }
+
+                    let btnProximo = document.getElementById('btnProximo');
+                    if (json.next_page_url != null) {
+                        btnProximo.setAttribute('onclick', 'listar(\'' + json.next_page_url + '\');');
+                        btnProximo.style.display = "block"
+                    } else {
+                        btnProximo.setAttribute('onclick', '');
+                        btnProximo.style.display = "none"
+                    }
+
+                    document.getElementById('btnAnterior')
+                }
+            });
+        }
+
+    </script>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
@@ -64,7 +163,6 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-header">Menu</li>
                         <li class="nav-item">
                             <a href="{{ route('main.agenda') }}" class="nav-link active">
                                 <i class="fas fa-address-card"></i>
@@ -106,8 +204,63 @@
             <section class="content">
                 <div id="mainDiv" class="container-fluid">
                     <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
 
+                                        <div class="input-group input-group-sm" style="height: auto;">
+                                            <input id="pesquisaInput" type="text" name="table_search" class="form-control float-right"
+                                                placeholder="Insira um nome ou telefone para pesquisar">
 
+                                            <div class="input-group-append">
+                                                <button onclick="pesquisar()" type="submit" class="btn btn-default"><i
+                                                        class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nome</th>
+                                                    <th>Tipo</th>
+                                                    <th>Documento</th>
+                                                    <th>Email</th>
+                                                    <th>Telefone</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodyAgenda">
+
+                                            </tbody>
+
+                                        </table>
+                                        <div id="divLoading" style="display:block;" class="bd-example">
+                                            <div class="text-center">
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="btn-group">
+                                <button id="btnAnterior" type="button" class="btn btn-info">
+                                    < Anterior</button>
+                                        <button id="btnInicio" onclick="listar("
+                                            {{ route('ajax.pesquisa.cliente') }}");" type="button"
+                                            class="btn btn-default">Ínicio</button>
+                                        <button id="btnProximo" type="button" class="btn btn-info">Próximo ></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="cardsDiv" class="row">

@@ -17,9 +17,8 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pesquisa = '')
     {
-        $pesquisa = '999';
         // $clientes = Cliente::simplePaginate(15);
         // return $clientes;
         // $cliente = Cliente::where('id', 1)->first();
@@ -31,10 +30,11 @@ class ClienteController extends Controller
         //     ->join('contatos', 'clientes.id', '=', 'contatos.cliente')
         //     ->groupBy('clientes.id')->simplePaginate(15);
 
-        $users = DB::table('clientes')
+        $clientes = DB::table('clientes')
             ->join('contatos', 'clientes.id', '=', 'contatos.cliente')->select('clientes.*', 'contatos.telefone', 'contatos.ddd')->whereRaw('nome like ? or telefone like ?', ["%{$pesquisa}%", "%{$pesquisa}%"])->groupBy('cliente')
-            ->paginate(2);
-        return $users;
+            ->paginate(1);
+
+        return $clientes;
     }
 
     /**
