@@ -61,6 +61,14 @@
                     </a>
                 </li>
             </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class=" nav-link">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </a>
+                </li>
+            </ul>
         </nav>
 
 
@@ -97,14 +105,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('inserir.registro') }}" class="nav-link">
                                 <i class="fas fa-user-plus"></i>
-
                                 <p>Inserir Novo registro</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('inserir.usuario') }}" class="nav-link">
+                            <a href="{{ route('inserir.usuario') }}" class="nav-link active">
                                 <i class="fas fa-user-lock"></i>
                                 <p>Inserir novo Usuário</p>
                             </a>
@@ -131,33 +138,37 @@
             <section class="content">
                 <div id="mainDiv" class="container-fluid">
                     <div class="container-fluid">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Quick Example</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="loginInput">Login</label>
-                                    <input type="text" class="form-control" id="loginInput"
-                                        placeholder="Insira o login">
-                                </div>
-                                <div class="form-group">
-                                    <label for="senhaInput">Senha</label>
-                                    <input type="password" class="form-control" id="senhaInput"
-                                        placeholder="Insira a senha">
-                                </div>
+                        <div class="container">
+                            <div class="justify-content-md-center">
 
-                            </div>
-                            <!-- /.card-body -->
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Insira as informações</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- form start -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="loginInput">Login</label>
+                                            <input type="text" class="form-control" id="loginInput"
+                                                placeholder="Insira o login">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="senhaInput">Senha</label>
+                                            <input type="password" class="form-control" id="senhaInput"
+                                                placeholder="Insira a senha">
+                                        </div>
 
-                            <div class="card-footer">
-                                <button type="submit" id="btnSubmit" onclick="cadastrarUsuario();"
-                                    class="btn btn-primary">Cadastrar Usuário</button>
+                                    </div>
+                                    <!-- /.card-body -->
+
+                                    <div class="card-footer">
+                                        <button type="submit" id="btnSubmit" onclick="cadastrarUsuario();"
+                                            class="btn btn-primary">Cadastrar Usuário</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -193,12 +204,9 @@
 
     </script>
     <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.js"></script>
-
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
 </body>
 
