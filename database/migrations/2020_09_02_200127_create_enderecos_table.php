@@ -15,7 +15,7 @@ class CreateEnderecosTable extends Migration
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('cliente');
+            $table->unsignedBigInteger('cliente');
             $table->unsignedBigInteger('bairro');
             $table->string('cep', 8);
             $table->string('logadouro', 120);
@@ -23,7 +23,7 @@ class CreateEnderecosTable extends Migration
             $table->string('numero', 7);
             $table->timestamps();
 
-            // $table->foreign('cliente')->references('id')->on('clientes')->onDelete('CASCADE');
+            $table->foreign('cliente')->references('id')->on('clientes')->onDelete('CASCADE');
             $table->foreign('bairro')->references('id')->on('bairros')->onDelete(('CASCADE'));
         });
     }

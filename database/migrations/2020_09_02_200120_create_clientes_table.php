@@ -15,14 +15,14 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('endereco');
             $table->string('nome', 255);
             $table->string('cpfCnpj', 14)->unique();
             $table->string('email', 255);
             $table->char('tipoPessoa', 1);
             $table->timestamps();
 
-            $table->foreign('endereco')->references('id')->on('enderecos')->onDelete(('CASCADE'));
+            // $table->unsignedBigInteger('endereco');
+            // $table->foreign('endereco')->references('id')->on('enderecos')->onDelete(('CASCADE'));
         });
     }
 
