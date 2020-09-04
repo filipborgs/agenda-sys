@@ -37,4 +37,4 @@ Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserContro
 
 Route::get('/usuario/logout', array('uses'  => 'UserController@logout'))->name('logout');
 
-Route::post('/usuario/cadastrar', array('uses'  => 'UserController@store'))->name('ajax.cadastro.usuario');
+Route::post('/usuario/cadastrar', array('uses'  => 'ClienteController@store'))->name('ajax.cadastro.usuario');

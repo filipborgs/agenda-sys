@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bairro;
 use App\Cidade;
 use App\Cliente;
+use App\Contato;
 use App\Endereco;
 use Illuminate\Http\Request;
 
@@ -59,6 +60,14 @@ class ClienteController extends Controller
         $cliente->tipoPessoa = $json->tipoPessoa;
         $cliente->save();
 
+        foreach ($json->contatos as &$contatoForm) {
+            $contato = new Contato();
+            $contato->ddd = $contatoForm->ddd;
+            $contato->telefone = $contatoForm->telefone;
+            $contato->cliente = $cliente->id;
+            $contato->save();
+        }
+
         // $clientCollection = Cidade::hydrate([json_decode($uri, true)]);
         // $cidade = $clientCollection->first();
         // $cidade->save();
@@ -71,7 +80,7 @@ class ClienteController extends Controller
         // echo $uri;
         // $cidade->nome = "feira de santana";
         // $cidade->uf = "BA";
-        echo 'sucesso';
+        echo '200';
     }
 
     /**

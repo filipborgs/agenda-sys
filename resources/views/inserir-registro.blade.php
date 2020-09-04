@@ -58,6 +58,17 @@
             }
         }
 
+        function Contato() {
+            this.id;
+            this.ddd;
+            this.telefone;
+
+            this.getContatoForm = function(index) {
+                this.ddd = document.getElementById('ddd-' + index).value;
+                this.telefone = document.getElementById('telefone-' + index).value;
+            }
+        }
+
         function Cliente() {
             this.id;
             this.nome;
@@ -75,12 +86,23 @@
 
                 this.endereco = new Endereco();
                 this.endereco.getEnderecoForm();
+
+                this.contatos = [];
+
+                let contador = window.sessionStorage.getItem('contadorTel');
+                for (let index = 1; index <= contador; index++) {
+                    let contato = new Contato();
+                    contato.getContatoForm(index);
+                    this.contatos.push(contato);
+                }
             }
+
+
         }
 
         function insrirRegistro() {
-            let loginInput = document.getElementById('loginInput').value;
-            let senhaInput = document.getElementById('senhaInput').value;
+            cliente = new Cliente();
+            cliente.getClienteForm();
 
             $.ajax({
                 type: "POST",
@@ -88,13 +110,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: JSON.stringify({
-                    login: loginInput,
-                    password: senhaInput
-                }),
+                data: JSON.stringify(cliente),
                 contentType: "application/json",
                 error: function(error, er, thrownError) {
-                    alert('Senha ou login invalido');
+                    alert('Erro durante o cadastro');
                     console.log(error);
                     console.log(er);
                     console.log(thrownError);
@@ -102,7 +121,6 @@
 
                 success: function(json) {
                     alert("Cadastro realizado com sucesso");
-                    window.location.href = "{{ route('main.agenda') }}";
                 }
             });
         }
@@ -125,7 +143,7 @@
 
             let inputDDD = document.createElement('input');
             inputDDD.type = "number";
-            inputDDD.id = "ddd" + contador;
+            inputDDD.id = "ddd-" + contador;
             inputDDD.className = "form-control";
             inputDDD.placeholder = "DDD";
             divDDD.appendChild(inputDDD);
@@ -135,7 +153,7 @@
 
             let inputTel = document.createElement('input');
             inputTel.type = "number";
-            inputTel.id = "ddd" + contador;
+            inputTel.id = "telefone-" + contador;
             inputTel.className = "form-control";
             inputTel.placeholder = "Número";
             divTel.appendChild(inputTel);
@@ -259,7 +277,7 @@
                                         <div class="form-group">
                                             <label for="nomeInput">Nome</label>
                                             <input type="text" class="form-control" id="nomeInput"
-                                                placeholder="Insira o login">
+                                                placeholder="Insira o nome">
                                         </div>
                                         <div class="form-group">
                                             <div class="form-check">
@@ -304,7 +322,7 @@
                                                         placeholder="DDD">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="number" id="numero-1" class="form-control"
+                                                    <input type="number" id="telefone-1" class="form-control"
                                                         placeholder="Número">
                                                 </div>
 
@@ -323,7 +341,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="card card-info">
+                                <div class="card card-warning">
                                     <div class="card-header">
                                         <h3 class="card-title">Endereço</h3>
                                     </div>
@@ -353,7 +371,7 @@
                                         <div class="form-group">
                                             <label for="numeroInput">Número</label>
                                             <input type="number" class="form-control" id="numeroInput"
-                                                placeholder="Insira o logadouro">
+                                                placeholder="Insira o número">
                                         </div>
                                         <div class="form-group">
                                             <label for="complementoInput">Complemento</label>
@@ -372,6 +390,11 @@
                             </div>
                         </div>
 
+                        <div class="col-md-12">
+                            <button type="submit" id="btnCadastrar" onclick="insrirRegistro();"
+                                class="btn btn-block btn-info btn-lg">Finalizar Cadastro</button>
+                            <br>
+                        </div>
 
 
                     </div>
