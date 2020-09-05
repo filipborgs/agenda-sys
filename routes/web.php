@@ -31,6 +31,10 @@ Route::get('/inserir-registro', function () {
     return view('inserir-registro');
 })->middleware('auth')->name('inserir.registro');
 
+Route::get('/cliente-registro/{id}', function () {
+    return view('registro-cliente');
+})->middleware('auth')->name('cliente.registro');
+
 
 //Services
 Route::get('/usuario/logout', array('uses'  => 'UserController@logout'))->name('logout');

@@ -55,6 +55,8 @@
 
                     for (let cliente of json.data) {
                         let tr = document.createElement("tr");
+                        tr.setAttribute("onclick", "abrirCliente(" + cliente.id + ");");
+                        tr.setAttribute("style", "cursor: pointer");
 
                         let td = document.createElement("td");
                         td.innerText = cliente.id;
@@ -106,6 +108,11 @@
                     document.getElementById('btnAnterior')
                 }
             });
+        }
+
+        function abrirCliente(id) {
+            // window.location.href = "{{ route('ajax.cadastro.usuario') }}" + "/" + id;
+            window.location.href = "{{ route('index') }}" + "/cliente-registro/" + id;
         }
 
     </script>
@@ -210,12 +217,13 @@
                                     <div class="card-header">
 
                                         <div class="input-group input-group-sm" style="height: auto;">
-                                            <input id="pesquisaInput" type="text" name="table_search" class="form-control float-right"
+                                            <input id="pesquisaInput" type="text" name="table_search"
+                                                class="form-control float-right"
                                                 placeholder="Insira um nome ou telefone para pesquisar">
 
                                             <div class="input-group-append">
                                                 <button onclick="pesquisar()" type="submit" class="btn btn-default"><i
-                                                        class="fas fa-search"></i></button>
+                                                        class="fas fa-search"></i> Pesquisar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +309,8 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.js') }}"></script>
-    {{-- <script src="{{ asset('js/global.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/global.js') }}"></script>
+    --}}
 
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 

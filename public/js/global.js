@@ -85,6 +85,16 @@ function Cliente() {
         }
 
     }
-
-
 }
+
+function abrirEdicaoRegistro() {
+    let tab = document.getElementById("edicaoTab");
+    if (tab.style.display === "none") {
+        tab.style.display = "block";
+        document.getElementById("btnEditarTab").click();
+    } else {
+        tab.style.display = "none";
+        document.getElementById("infoAlunoBtn").click();
+    }
+}
+
