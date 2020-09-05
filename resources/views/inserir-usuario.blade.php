@@ -96,7 +96,6 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
 
-                        <li class="nav-header">Menu</li>
                         <li class="nav-item">
                             <a href="{{ route('main.agenda') }}" class="nav-link">
                                 <i class="fas fa-address-card"></i>
@@ -207,6 +206,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
 
 </body>
 
