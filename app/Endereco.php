@@ -13,7 +13,7 @@ class Endereco extends Model
 
     public function bairro()
     {
-        return $this->hasOne(Bairro::class, 'bairro', 'id');
+        return $this->belongsTo(Bairro::class, 'bairro', 'id');
     }
 
     public function cliente()

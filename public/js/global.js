@@ -4,7 +4,7 @@ function Cidade() {
     this.uf;
 
     this.getCidadeForm = function() {
-        this.nome = document.getElementById('nomeInput').value;
+        this.nome = document.getElementById('cidadeInput').value;
         this.uf = document.getElementById('ufInput').value;
     }
 }
@@ -15,7 +15,7 @@ function Bairro() {
     this.cidade;
 
     this.getBairroForm = function() {
-        this.nome = document.getElementById('nomeInput').value;
+        this.nome = document.getElementById('bairroInput').value;
         this.cidade = new Cidade();
         this.cidade.getCidadeForm();
     }

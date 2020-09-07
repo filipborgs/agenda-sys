@@ -13,6 +13,6 @@ class Bairro extends Model
 
     public function cidade()
     {
-        return $this->hasOne(Cidade::class, 'cidade', 'id');
+        return $this->belongsTo(Cidade::class, 'cidade', 'id');
     }
 }

@@ -37,12 +37,14 @@ Route::get('/cliente-registro/{id}', function () {
 
 
 //Services
-Route::get('/usuario/logout', array('uses'  => 'UserController@logout'))->name('logout');
+Route::get('/usuario/logout', 'UserController@logout')->name('logout');
 
-Route::post('/usuario/login', array('as' => 'ajax.login', 'uses'  => 'UserController@login'));
+Route::post('/usuario/login', 'UserController@login')->name('ajax.login');
 
-Route::post('/usuario/cadastrar', array('uses'  => 'UserController@store'))->name('ajax.cadastro.usuario');
+Route::post('/usuario/cadastrar', 'UserController@store')->name('ajax.cadastro.usuario');
 
-Route::get('/cliente/pesquisa/{pesquisa?}', array('uses'  => 'ClienteController@index'))->name('ajax.pesquisa.cliente');
+Route::get('/cliente/exibir/{id}', 'ClienteController@show');
 
-Route::post('/cliente/cadastrar', array('uses'  => 'ClienteController@store'))->name('ajax.cadastro.cliente');
+Route::get('/cliente/pesquisa/{pesquisa?}', 'ClienteController@index')->name('ajax.pesquisa.cliente');
+
+Route::post('/cliente/cadastrar', 'ClienteController@store')->name('ajax.cadastro.cliente');
