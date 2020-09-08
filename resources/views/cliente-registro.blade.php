@@ -14,7 +14,144 @@
 
     <script>
         window.onload = function() {
+            let id = window.location.pathname.split("/").pop();
+            window.sessionStorage.removeItem('registroJson');
+            getRegistro(id);
+        }
 
+        function getRegistro(id) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('index') }}" + "/cliente/exibir/" + id,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                error: function(error, er, thrownError) {
+                    alert('Erro');
+                    document.getElementById('divLoading').style.display = "none";
+
+                    console.log(error);
+                    console.log(er);
+                    console.log(thrownError);
+                },
+
+                success: function(json) {
+
+                    loadRegistroDom(json);
+
+                }
+            });
+        }
+
+        function loadRegistroDom(json) {
+            document.getElementById('nomePessoa').innerText = json.nome;
+            if (json.tipoPessoa === 'F') {
+                document.getElementById('tipoPessoa').innerText = 'Pessoa Física';
+                document.getElementById('tipoPessoaInfo').innerText = 'Pessoa Física';
+                document.getElementById('radioF').click();
+            } else {
+                document.getElementById('tipoPessoa').innerText = 'Pessoa Juridica';
+                document.getElementById('tipoPessoaInfo').innerText = 'Pessoa Juridica';
+                document.getElementById('radioJ').click();
+
+            }
+
+            document.getElementById('nomeInfo').innerText = json.nome;
+            document.getElementById('documentoInfo').innerText = json.cpfCnpj;
+            document.getElementById('emailInfo').innerText = json.email;
+
+
+            document.getElementById('cidadeInfo').innerText = "Cidade: " + json.endereco.bairro
+                .cidade.nome;
+            document.getElementById('ufInfo').innerText = "UF: " + json.endereco.bairro.cidade
+                .uf;
+            document.getElementById('bairroInfo').innerText = "Bairro: " + json.endereco.bairro
+                .nome;
+            document.getElementById('logadouroInfo').innerText = "Logadouro: " + json.endereco
+                .logadouro;
+            document.getElementById('numeroResidenciaInfo').innerText = "Nº: " + json.endereco
+                .numero;
+
+            document.getElementById('cepInfo').innerText = "CEP: " + json.endereco.cep;
+            document.getElementById('complementoInfo').innerText = "Complemento: " + json.endereco
+                .complemento;
+
+            let div = document.getElementById('telefones');
+            for (let contato of json.contatos) {
+                let p = document.createElement('p');
+                p.className = 'text-muted';
+                p.innerText = '(' + contato.ddd + ') ' + contato.telefone;
+                div.appendChild(p);
+
+                let row = getRowTelefone(contato.id, contato.ddd, contato.telefone);
+                document.getElementById('divTelefone').appendChild(row);
+            }
+
+
+            document.getElementById('nomeInput').value = json.nome;
+            document.getElementById('cpfCnpjInput').value = json.cpfCnpj;
+            document.getElementById('emailInput').value = json.email;
+
+            document.getElementById('cidadeInput').value = json.endereco.bairro.cidade.nome;
+            document.getElementById('ufInput').value = json.endereco.bairro.cidade.uf;
+            document.getElementById('bairroInput').value = json.endereco.bairro.nome;
+            document.getElementById('logadouroInput').value = json.endereco.logadouro;
+            document.getElementById('numeroInput').value = json.endereco.numero;
+            document.getElementById('complementoInput').value = json.endereco.complemento;
+            document.getElementById('cepInput').value = json.endereco.cep;
+
+            window.sessionStorage.setItem('registroJson', JSON.stringify(json));
+        }
+
+        function salvarEdicao() {
+            let cliente = new Cliente();
+            cliente.getClienteForm(true);
+            $.ajax({
+                type: "POST",
+                url: "{{ route('ajax.editar.cliente') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify(cliente),
+                contentType: "application/json",
+                error: function(error, er, thrownError) {
+                    alert('Erro');
+
+                    console.log(error);
+                    console.log(er);
+                    console.log(thrownError);
+                },
+
+                success: function(json) {
+                    console.log(json)
+                    loadRegistroDom(json);
+                    document.getElementById("infoCliente").click();
+                    alert('Salvo')
+                }
+            });
+        }
+
+        function deleteRegistro() {
+            cliente = JSON.parse(window.sessionStorage.getItem('registroJson'));
+            $.ajax({
+                type: "DELETE",
+                url: "{{ route('index') }}" + "/cliente/excluir/" + cliente.id,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                error: function(error, er, thrownError) {
+                    alert('Erro');
+
+                    console.log(error);
+                    console.log(er);
+                    console.log(thrownError);
+                },
+
+                success: function(json) {
+                    alert('Excluido');
+                    window.location.href = "{{ route('main') }}";
+                }
+            });
         }
 
     </script>
@@ -142,8 +279,8 @@
                                         <a class="btn btn-app" style="cursor: pointer"
                                             onclick="abrirEdicaoRegistro();"><i class="fas fa-edit"></i>
                                             Editar</a>
-                                        <a class="btn btn-app" style="cursor: pointer"
-                                            onclick="removerRegistro();"><i class="fas fa-trash-alt"></i> Excluir
+                                        <a class="btn btn-app" style="cursor: pointer" onclick="deleteRegistro();"><i
+                                                class="fas fa-trash-alt"></i> Excluir
                                         </a>
                                     </div>
                                     <!-- /.card-body -->
@@ -155,8 +292,8 @@
                                 <div class="card">
                                     <div class="card-header p-2">
                                         <ul class="nav nav-pills">
-                                            <li class="nav-item"><a class="nav-link active" href="#info"
-                                                    data-toggle="tab">Informações do Cliente</a></li>
+                                            <li class="nav-item"><a id="infoCliente" class="nav-link active"
+                                                    href="#info" data-toggle="tab">Informações do Cliente</a></li>
                                             <li id="edicaoTab" style="display: none;" class="nav-item"><a
                                                     id="btnEditarTab" class="nav-link" data-toggle="tab"
                                                     href="#edicao">Edição</a></li>
@@ -166,7 +303,9 @@
                                         <div class="tab-content">
                                             <div class="active tab-pane" id="info">
                                                 <div class="card-body" id="bodyInfo">
+
                                                     <strong><i class="fas fa-book mr-1"></i> Info</strong>
+                                                    <hr>
 
                                                     <p class="text-muted" id="nomeInfo"> </p>
                                                     <p class="text-muted" id="tipoPessoaInfo"> </p>
@@ -174,27 +313,33 @@
                                                     <p class="text-muted" id="emailInfo"> </p>
 
                                                     <hr>
+                                                    <strong><i class="fas fa-phone-alt"></i> Telefone(s)</strong>
+                                                    <hr>
+
+                                                    <div id="telefones"></div>
+                                                    <hr>
 
                                                     <strong><i class="fas fa-map-marked-alt"></i> Endereço</strong>
                                                     <hr>
-                                                    <p class="text-muted" id="ruaInfo"> </p>
+                                                    <p class="text-muted" id="logadouroInfo"> </p>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <p class="text-muted" id="bairroInfo"> </p>
-                                                            <p class="text-muted" id="ufInfo"> </p>
+                                                            <p class="text-muted" id="cepInfo"> </p>
+                                                            <p class="text-muted" id="complementoInfo"> </p>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <p class="text-muted" id="numeroResidenciaInfo"> </p>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <p class="text-muted" id="cidadeInfo"> </p>
+                                                            <p class="text-muted" id="ufInfo"> </p>
                                                         </div>
                                                     </div>
 
                                                     <hr>
 
-                                                    <strong><i class="fas fa-phone-alt"></i> Telefone(s)</strong>
-                                                    <hr>
+
                                                 </div>
                                             </div>
 
@@ -216,14 +361,16 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" value="F"
-                                                                            type="radio" name="tipoPessoaRadio">
+                                                                        <input id="radioF" class="form-check-input"
+                                                                            value="F" type="radio"
+                                                                            name="tipoPessoaRadio">
                                                                         <label class="form-check-label">Pessoa
                                                                             Física</label>
                                                                     </div>
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" value="J"
-                                                                            type="radio" name="tipoPessoaRadio">
+                                                                        <input id="radioJ" class="form-check-input"
+                                                                            value="J" type="radio"
+                                                                            name="tipoPessoaRadio">
                                                                         <label class="form-check-label">Pessoa
                                                                             Jurídica</label>
                                                                     </div>
@@ -231,8 +378,8 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="cpfCnpjInput">CPF/CNPJ</label>
-                                                                    <input type="number" class="form-control"
-                                                                        id="cpfCnpjInput"
+                                                                    <input min="0" max="99999999999" type="number"
+                                                                        class="form-control" id="cpfCnpjInput"
                                                                         placeholder="Insira o CPF ou CNPJ">
                                                                 </div>
                                                             </div>
@@ -253,22 +400,10 @@
 
                                                                 <div id="divTelefone" class="form-group">
                                                                     <label for="ddd-1">Telefone</label>
-                                                                    <div class="row">
 
-                                                                        <div class="col-3">
-                                                                            <input type="number" id="ddd-1"
-                                                                                class="form-control" placeholder="DDD">
-                                                                        </div>
-                                                                        <div class="col-9">
-                                                                            <input type="number" id="telefone-1"
-                                                                                class="form-control"
-                                                                                placeholder="Número">
-                                                                        </div>
-
-                                                                    </div>
                                                                 </div>
 
-                                                                <div id="divBtnAdd"
+                                                                {{-- <div id="divBtnAdd"
                                                                     class="row justify-content-md-center">
                                                                     <div class="col col-lg-6">
                                                                         <button type="button"
@@ -277,7 +412,7 @@
                                                                             outro
                                                                             telefone</button>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
 
                                                             </div>
                                                         </div>
@@ -316,8 +451,9 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="numeroInput">Número</label>
-                                                                    <input type="number" class="form-control"
-                                                                        id="numeroInput" placeholder="Insira o número">
+                                                                    <input type="number" input min="0" max="99999999999"
+                                                                        class="form-control" id="numeroInput"
+                                                                        placeholder="Insira o número">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="complementoInput">Complemento</label>
