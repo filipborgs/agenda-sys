@@ -41,46 +41,6 @@
             });
         }
 
-        function addRowTelefone() {
-
-            let contador = window.sessionStorage.getItem('contadorTel');
-            if (contador === null) {
-                contador = 2;
-            } else {
-                contador = parseInt(contador);
-                contador++;
-            }
-
-            let row = document.createElement('div');
-            row.className = "row";
-
-            let divDDD = document.createElement('div');
-            divDDD.className = "col-3";
-
-            let inputDDD = document.createElement('input');
-            inputDDD.type = "number";
-            inputDDD.id = "ddd-" + contador;
-            inputDDD.className = "form-control";
-            inputDDD.placeholder = "DDD";
-            divDDD.appendChild(inputDDD);
-
-            let divTel = document.createElement('div');
-            divTel.className = "col-9";
-
-            let inputTel = document.createElement('input');
-            inputTel.type = "number";
-            inputTel.id = "telefone-" + contador;
-            inputTel.className = "form-control";
-            inputTel.placeholder = "Número";
-            divTel.appendChild(inputTel);
-
-            row.appendChild(divDDD);
-            row.appendChild(divTel);
-
-            document.getElementById('divTelefone').appendChild(row);
-            window.sessionStorage.setItem('contadorTel', contador);
-        }
-
     </script>
 
 </head>
@@ -209,7 +169,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="cpfCnpjInput">CPF/CNPJ</label>
-                                            <input type="number" class="form-control" id="cpfCnpjInput"
+                                            <input type="number" input min="0" max="99999999999"  class="form-control" id="cpfCnpjInput"
                                                 placeholder="Insira o CPF ou CNPJ">
                                         </div>
                                     </div>
@@ -233,11 +193,11 @@
                                             <div class="row">
 
                                                 <div class="col-3">
-                                                    <input type="number" id="ddd-1" class="form-control"
+                                                    <input type="number" input min="0" max="99"  id="ddd-1" class="form-control"
                                                         placeholder="DDD">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="number" id="telefone-1" class="form-control"
+                                                    <input  type="number"  input min="0" max="99999999999"  id="telefone-1" class="form-control"
                                                         placeholder="Número">
                                                 </div>
 
@@ -285,7 +245,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="numeroInput">Número</label>
-                                            <input type="number" class="form-control" id="numeroInput"
+                                            <input type="number" input min="0" max="99999999999"  class="form-control" id="numeroInput"
                                                 placeholder="Insira o número">
                                         </div>
                                         <div class="form-group">
