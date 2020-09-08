@@ -32,7 +32,7 @@ class ClienteController extends Controller
 
         $clientes = DB::table('clientes')
             ->join('contatos', 'clientes.id', '=', 'contatos.cliente')->select('clientes.*', 'contatos.telefone', 'contatos.ddd')->whereRaw('nome like ? or telefone like ?', ["%{$pesquisa}%", "%{$pesquisa}%"])->groupBy('cliente')
-            ->paginate(1);
+            ->paginate(5);
 
         return $clientes;
     }

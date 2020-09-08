@@ -263,9 +263,7 @@
                             <div class="btn-group">
                                 <button id="btnAnterior" type="button" class="btn btn-info">
                                     < Anterior</button>
-                                        <button id="btnInicio" onclick="listar("
-                                            {{ route('ajax.pesquisa.cliente') }}");" type="button"
-                                            class="btn btn-default">Ínicio</button>
+
                                         <button id="btnProximo" type="button" class="btn btn-info">Próximo ></button>
                             </div>
                         </div>

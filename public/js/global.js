@@ -21,8 +21,10 @@ function Bairro() {
         this.nome = document.getElementById('bairroInput').value;
         if (json != null) {
             this.id = json.id;
+            this.cidade = new Cidade(json.cidade);
+        } else {
+            this.cidade = new Cidade(null);
         }
-        this.cidade = new Cidade(json.cidade);
         this.cidade.getCidadeForm();
     }
 }
@@ -41,12 +43,14 @@ function Endereco() {
         this.numero = document.getElementById('numeroInput').value;
         this.complemento = document.getElementById('complementoInput').value;
 
+        this.bairro = new Bairro();
         if (json != null) {
             this.id = json.id;
+            this.bairro.getBairroForm(json.bairro);
+        } else {
+            this.bairro.getBairroForm(null);
         }
 
-        this.bairro = new Bairro();
-        this.bairro.getBairroForm(json.bairro);
     }
 }
 
@@ -78,13 +82,12 @@ function Cliente() {
 
         let json = JSON.parse(window.sessionStorage.getItem('registroJson'));
 
-
         this.endereco = new Endereco();
-        this.endereco.getEnderecoForm(json.endereco);
 
         this.contatos = [];
 
         if (edicao != null) {
+            this.endereco.getEnderecoForm(json.endereco);
             this.id = json.id;
             for (const cont of json.contatos) {
                 let contato = new Contato();
@@ -92,6 +95,8 @@ function Cliente() {
                 this.contatos.push(contato);
             }
         } else {
+            this.endereco.getEnderecoForm(null);
+
             let contador = window.sessionStorage.getItem('contadorTel');
             if (contador === null) {
                 let contato = new Contato();
@@ -175,4 +180,3 @@ function getRowTelefone(contador, ddd, telefone) {
     // window.sessionStorage.setItem('contadorTel', contador);
     return row;
 }
-

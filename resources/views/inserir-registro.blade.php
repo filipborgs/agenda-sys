@@ -151,26 +151,28 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="nomeInput">Nome</label>
-                                            <input type="text" class="form-control" id="nomeInput"
+                                            <input type="text" maxlength="200" class="form-control" id="nomeInput"
                                                 placeholder="Insira o nome">
                                         </div>
                                         <div class="form-group">
                                             <div class="form-check">
-                                                <input class="form-check-input" value="F" type="radio"
+                                                <input id="radioF" class="form-check-input" value="F" type="radio"
                                                     name="tipoPessoaRadio">
-                                                <label class="form-check-label">Pessoa Física</label>
+                                                <label class="form-check-label">Pessoa
+                                                    Física</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" value="J" type="radio"
+                                                <input id="radioJ" class="form-check-input" value="J" type="radio"
                                                     name="tipoPessoaRadio">
-                                                <label class="form-check-label">Pessoa Jurídica</label>
+                                                <label class="form-check-label">Pessoa
+                                                    Jurídica</label>
                                             </div>
 
                                         </div>
                                         <div class="form-group">
                                             <label for="cpfCnpjInput">CPF/CNPJ</label>
-                                            <input type="number" input min="0" max="99999999999"  class="form-control" id="cpfCnpjInput"
-                                                placeholder="Insira o CPF ou CNPJ">
+                                            <input min="0" max="99999999999999" type="number" class="form-control"
+                                                id="cpfCnpjInput" placeholder="Insira o CPF ou CNPJ">
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +186,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="emailInput">E-mail</label>
-                                            <input type="text" class="form-control" id="emailInput"
+                                            <input type="text" maxlength="255" class="form-control" id="emailInput"
                                                 placeholder="Insira o E-mail">
                                         </div>
 
@@ -193,12 +195,12 @@
                                             <div class="row">
 
                                                 <div class="col-3">
-                                                    <input type="number" input min="0" max="99"  id="ddd-1" class="form-control"
-                                                        placeholder="DDD">
+                                                    <input type="number" input min="0" max="99" id="ddd-1"
+                                                        class="form-control" placeholder="DDD">
                                                 </div>
                                                 <div class="col-9">
-                                                    <input  type="number"  input min="0" max="99999999999"  id="telefone-1" class="form-control"
-                                                        placeholder="Número">
+                                                    <input type="number" input min="0" max="99999999999" id="telefone-1"
+                                                        class="form-control" placeholder="Número">
                                                 </div>
 
                                             </div>
@@ -225,7 +227,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="cidadeInput">Cidade</label>
-                                            <input type="text" class="form-control" id="cidadeInput"
+                                            <input type="text" maxlength="200" class="form-control" id="cidadeInput"
                                                 placeholder="Insira o nome da cidade">
                                         </div>
                                         <div class="form-group">
@@ -235,28 +237,28 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="bairroInput">Bairro</label>
-                                            <input type="text" class="form-control" id="bairroInput"
+                                            <input type="text" maxlength="40" class="form-control" id="bairroInput"
                                                 placeholder="Insira o nome do bairro">
                                         </div>
                                         <div class="form-group">
                                             <label for="logadouroInput">Logadouro</label>
-                                            <input type="text" class="form-control" id="logadouroInput"
+                                            <input type="text" maxlength="120" class="form-control" id="logadouroInput"
                                                 placeholder="Insira o logadouro">
                                         </div>
                                         <div class="form-group">
                                             <label for="numeroInput">Número</label>
-                                            <input type="number" input min="0" max="99999999999"  class="form-control" id="numeroInput"
-                                                placeholder="Insira o número">
+                                            <input type="number" input min="0" max="99999999999" class="form-control"
+                                                id="numeroInput" placeholder="Insira o número">
                                         </div>
                                         <div class="form-group">
                                             <label for="complementoInput">Complemento</label>
-                                            <input type="text" class="form-control" id="complementoInput"
+                                            <input type="text" maxlength="60" class="form-control" id="complementoInput"
                                                 placeholder="Insira o complemento">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="cepInput">CEP</label>
-                                            <input type="text" class="form-control" id="cepInput"
+                                            <input type="text" maxlength="8" class="form-control" id="cepInput"
                                                 placeholder="Insira o CEP">
                                         </div>
 

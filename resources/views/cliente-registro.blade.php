@@ -76,6 +76,7 @@
             document.getElementById('complementoInfo').innerText = "Complemento: " + json.endereco
                 .complemento;
 
+            $("#telefones").empty();
             let div = document.getElementById('telefones');
             for (let contato of json.contatos) {
                 let p = document.createElement('p');
@@ -149,7 +150,7 @@
 
                 success: function(json) {
                     alert('Excluido');
-                    window.location.href = "{{ route('main') }}";
+                    window.location.href = "{{ route('index') }}";
                 }
             });
         }
@@ -356,8 +357,9 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <label for="nomeInput">Nome</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="nomeInput" placeholder="Insira o nome">
+                                                                    <input type="text" maxlength="200"
+                                                                        class="form-control" id="nomeInput"
+                                                                        placeholder="Insira o nome">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="form-check">
@@ -378,7 +380,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="cpfCnpjInput">CPF/CNPJ</label>
-                                                                    <input min="0" max="99999999999" type="number"
+                                                                    <input min="0" max="99999999999999" type="number"
                                                                         class="form-control" id="cpfCnpjInput"
                                                                         placeholder="Insira o CPF ou CNPJ">
                                                                 </div>
@@ -394,8 +396,9 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <label for="emailInput">E-mail</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="emailInput" placeholder="Insira o E-mail">
+                                                                    <input maxlength="255" type="text"
+                                                                        class="form-control" id="emailInput"
+                                                                        placeholder="Insira o E-mail">
                                                                 </div>
 
                                                                 <div id="divTelefone" class="form-group">
@@ -427,8 +430,8 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <label for="cidadeInput">Cidade</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="cidadeInput"
+                                                                    <input type="text" maxlength="200"
+                                                                        class="form-control" id="cidadeInput"
                                                                         placeholder="Insira o nome da cidade">
                                                                 </div>
                                                                 <div class="form-group">
@@ -439,14 +442,14 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="bairroInput">Bairro</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="bairroInput"
+                                                                    <input type="text" maxlength="40"
+                                                                        class="form-control" id="bairroInput"
                                                                         placeholder="Insira o nome do bairro">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="logadouroInput">Logadouro</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="logadouroInput"
+                                                                    <input type="text" maxlength="120"
+                                                                        class="form-control" id="logadouroInput"
                                                                         placeholder="Insira o logadouro">
                                                                 </div>
                                                                 <div class="form-group">
@@ -457,15 +460,16 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="complementoInput">Complemento</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="complementoInput"
+                                                                    <input type="text" maxlength="60"
+                                                                        class="form-control" id="complementoInput"
                                                                         placeholder="Insira o complemento">
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="cepInput">CEP</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="cepInput" placeholder="Insira o CEP">
+                                                                    <input type="text" maxlength="8"
+                                                                        class="form-control" id="cepInput"
+                                                                        placeholder="Insira o CEP">
                                                                 </div>
 
                                                             </div>

@@ -13,7 +13,8 @@ class Endereco extends Model
 
     public function setCepAttribute($valor)
     {
-        $valor = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $valor);
+        $caracteres = array("-", ".", "/", "\\");
+        $valor = str_replace($caracteres, "", $valor);
         $this->attributes['cep'] = $valor;
     }
 

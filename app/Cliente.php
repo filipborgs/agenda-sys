@@ -19,7 +19,8 @@ class Cliente extends Model
 
     public function setCpfCnpjAttribute($valor)
     {
-        $valor = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $valor);
+        $caracteres = array("-", ".", "/", "\\");
+        $valor = str_replace($caracteres, "", $valor);
 
         $this->attributes['cpfCnpj'] = $valor;
     }
