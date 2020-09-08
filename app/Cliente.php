@@ -11,6 +11,37 @@ class Cliente extends Model
         'nome', 'cpfCnpj', 'email', 'tipoPessoa'
     ];
 
+
+    public function setNomeAttribute($valor)
+    {
+        $this->attributes['nome'] = $valor;
+    }
+
+    public function setCpfCnpjAttribute($valor)
+    {
+        $valor = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $valor);
+
+        $this->attributes['cpfCnpj'] = $valor;
+    }
+
+    public function setEmailAttribute($valor)
+    {
+        if (strpos($valor, '@')) {
+            $this->attributes['email'] = $valor;
+        } else {
+            throw new \Exception('Email invalido');
+        }
+    }
+
+    public function setTipoPessoaAttribute($valor)
+    {
+        if (strcasecmp('F', $valor) === 0 || strcasecmp('J', $valor) === 0) {
+            $this->attributes['tipoPessoa'] = $valor;
+        } else {
+            throw new \Exception('Tipo invalido');
+        }
+    }
+
     public function endereco()
     {
         return $this->hasOne(Endereco::class, 'cliente', 'id');

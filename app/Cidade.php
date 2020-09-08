@@ -11,6 +11,25 @@ class Cidade extends Model
         'nome', 'uf'
     ];
 
+    public function setNomeAttribute($valor)
+    {
+        $this->attributes['nome'] = $valor;
+    }
+
+    public function setUfAttribute($valor)
+    {
+        if (strlen($valor) === 2) {
+            $this->attributes['uf'] = $valor;
+        } else {
+            throw new \Exception('UF invalido');
+        }
+    }
+
+    public function bairro()
+    {
+        return $this->belongsTo(Bairro::class, 'cidade', 'id');
+    }
+
 
     // public function set($data)
     // {

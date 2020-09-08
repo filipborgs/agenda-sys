@@ -11,9 +11,31 @@ class Endereco extends Model
         'cep', 'logadouro', 'numero', 'complemento'
     ];
 
+    public function setCepAttribute($valor)
+    {
+        $valor = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $valor);
+        $this->attributes['cep'] = $valor;
+    }
+
+    public function setLogadouroAttribute($valor)
+    {
+        $this->attributes['logadouro'] = $valor;
+    }
+
+    public function setNumeroAttribute($valor)
+    {
+        $this->attributes['numero'] = $valor;
+    }
+
+    public function setComplementoAttribute($valor)
+    {
+        $this->attributes['complemento'] = $valor;
+    }
+
+
     public function bairro()
     {
-        return $this->belongsTo(Bairro::class, 'bairro', 'id');
+        return $this->hasOne(Bairro::class, 'id', 'bairro');
     }
 
     public function cliente()
